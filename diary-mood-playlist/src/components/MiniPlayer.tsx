@@ -42,7 +42,7 @@ export default function MiniPlayer() {
           aria-label={isPlaying ? '일시정지' : '재생'}
         >
           <span className="text-white text-lg">
-            {isPlaying ? '⏸' : '▶️'}
+            {isPlaying ? '⏸' : '⏵'}
           </span>
         </button>
 

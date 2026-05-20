@@ -157,7 +157,7 @@
 | 프레임워크 | React 18 + Vite | 빠른 개발, HMR, 경량 |
 | 스타일링 | Tailwind CSS | 유틸리티 기반 빠른 UI 구현 |
 | 라우팅 | React Router v6 | SPA 내 페이지 전환 |
-| AI | Amazon Bedrock (Claude Opus 4.7) | AWS 네이티브, 최고 성능 모델 |
+| AI | Amazon Bedrock (Claude) | AWS 네이티브, 고성능 모델 |
 | 음악 | YouTube Data API v3 | API 키만으로 동작, 전곡 재생 가능 |
 | 재생 | YouTube IFrame Player API | 임베드 플레이어, 로그인 불필요 |
 | 파티클 | tsparticles | 설정 기반 파티클 효과 |
@@ -180,8 +180,9 @@
 ```
 
 **내부 호출:** AWS SDK를 통해 Amazon Bedrock InvokeModel API 호출
-- 모델: `anthropic.claude-opus-4-7`
-- 리전: `us-east-1` (또는 환경변수로 설정)
+- 모델: 환경변수 `BEDROCK_MODEL_ID`로 설정 (기본값: `us.anthropic.claude-sonnet-4-20250514-v1:0`)
+- 리전: 환경변수 `AWS_REGION`으로 설정 (기본값: `us-east-1`)
+- 응답에 마크다운 코드블록이 포함될 수 있으므로 파싱 전 제거 처리
 
 **응답:**
 ```json
@@ -206,7 +207,7 @@
 - `AWS_ACCESS_KEY_ID` — AWS IAM 액세스 키
 - `AWS_SECRET_ACCESS_KEY` — AWS IAM 시크릿 키
 - `AWS_REGION` — Bedrock 리전 (기본값: us-east-1)
-- `BEDROCK_MODEL_ID` — 모델 ID (기본값: anthropic.claude-opus-4-7)
+- `BEDROCK_MODEL_ID` — 모델 ID 또는 inference profile ID (예: `us.anthropic.claude-sonnet-4-20250514-v1:0`)
 
 ### 6.2 YouTube 검색 요청
 
