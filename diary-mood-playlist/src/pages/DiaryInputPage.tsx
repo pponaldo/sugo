@@ -5,7 +5,7 @@ import { analyzeDiary, searchYouTube } from '../utils/api';
 import { saveEntry } from '../utils/storage';
 import { DAY_NAMES, DIARY_MAX_LENGTH } from '../constants';
 import LoadingAnimation from '../components/LoadingAnimation';
-import type { DiaryEntry } from '../types';
+import type { DiaryEntry, Track } from '../types';
 
 export default function DiaryInputPage() {
   const [text, setText] = useState('');
@@ -26,7 +26,7 @@ export default function DiaryInputPage() {
       const analysis = await analyzeDiary(text);
 
       // 2. YouTube 검색
-      let tracks = [];
+      let tracks: Track[] = [];
       try {
         const ytResult = await searchYouTube(analysis.mood.searchQueries);
         tracks = ytResult.tracks;

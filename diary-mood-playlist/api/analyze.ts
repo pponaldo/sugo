@@ -65,7 +65,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const response = await client.send(command);
     const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-    const result = JSON.parse(responseBody.content[0].text);
+    let text = responseBody.content[0].text.trim();
+
+    // 마크다운 코드블록 제거
+    if (text.startsWith('```')) {
+      text = text.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+    }
+
+    const result = JSON.parse(text);
 
     return res.status(200).json(result);
   } catch (error) {

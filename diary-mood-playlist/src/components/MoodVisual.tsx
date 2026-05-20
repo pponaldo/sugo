@@ -1,7 +1,6 @@
-import { useCallback } from 'react';
-import Particles from '@tsparticles/react';
+import { useEffect, useState } from 'react';
+import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import type { Engine } from '@tsparticles/engine';
 import type { MoodColor } from '../types';
 import { GRADIENT_MAP, DEFAULT_GRADIENT } from '../constants';
 import { getParticleConfig } from '../utils/particles';
@@ -13,12 +12,17 @@ interface MoodVisualProps {
 
 export default function MoodVisual({ color, energy }: MoodVisualProps) {
   const gradient = GRADIENT_MAP[color] || DEFAULT_GRADIENT;
+  const [engineReady, setEngineReady] = useState(false);
 
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadSlim(engine);
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => setEngineReady(true));
   }, []);
 
   const particleOptions = getParticleConfig(energy, color);
+
+  if (!engineReady) return null;
 
   return (
     <div
@@ -30,7 +34,6 @@ export default function MoodVisual({ color, energy }: MoodVisualProps) {
     >
       <Particles
         id="mood-particles"
-        init={particlesInit}
         options={particleOptions}
         className="absolute inset-0"
       />
